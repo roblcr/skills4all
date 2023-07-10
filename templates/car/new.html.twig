@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Création d'une voiture{% endblock %}
+
+{% block body %}
+    <div class="container">
+    <h1>Création d'une voiture</h1>
+
+   <div class="card">
+        <div class="card-body">
+            {{ include('car/_form.html.twig', {'button_label': 'Create'}) }}
+        </div>
+    </div>
+
+    <a href="{{ path('app_car_index') }}" class="btn btn-primary mt-3">Retour a la liste</a>
+    </div>
+{% endblock %}

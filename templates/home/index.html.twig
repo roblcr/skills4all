@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Mon Site</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('app_car_index') }}">Voitures</a>
+                    </li>
+                    <!-- Ajoutez d'autres liens de navigation ici -->
+                </ul>
+            </div>
+        </nav>
+
+        <div class="jumbotron">
+            <p class="lead">Découvrez notre collection de voitures.</p>
+        </div>
+
+        {% if weatherData %}
+            <div class="card">
+                <div class="card-header">
+                    <h2>Météo actuelle à {{ weatherData.name }}</h2>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Température : {{ weatherData.main.temp }}°C</p>
+                    <p class="card-text">Conditions : {{ weatherData.weather.0.description }}</p>
+                </div>
+            </div>
+        {% else %}
+            <div class="alert alert-warning" role="alert">
+                Les données météo ne sont pas disponibles actuellement.
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

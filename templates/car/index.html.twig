@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des voitures{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Liste des voitures</h1>
+    <div class="d-flex justify-content-end mb-3">
+        <a href="{{ path('app_home') }}">Retour à la page d'accueil</a>
+    </div>
+
+    <form action="{{ path('app_car_index') }}" method="GET" class="mb-3">
+        <div class="input-group">
+            <input type="text" name="search" class="form-control" placeholder="Search by car name">
+            <button type="submit" class="btn btn-primary">Rechercher</button>
+        </div>
+    </form>
+
+    <div class="mb-3">
+        <h5>Filter par categorie</h5>
+        {% for category in categories %}
+            <a href="{{ path('app_car_index', {'category': category.id}) }}" class="btn btn-outline-primary {% if category.id == selectedCategory %}active{% endif %}">{{ category.name }}</a>
+        {% endfor %}
+        <a href="{{ path('app_car_index') }}" class="btn btn-outline-primary {% if selectedCategory is empty %}active{% endif %}">All</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nomber de sièges</th>
+                    <th>Nombre de portes</th>
+                    <th>Nom</th>
+                    <th>Catégorie</th>
+                    <th>Coût</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for car in pagination %}
+                    <tr>
+                        <td>{{ car.id }}</td>
+                        <td>{{ car.nbSeats }}</td>
+                        <td>{{ car.nbDoors }}</td>
+                        <td>{{ car.name }}</td>
+                        <td>{{ car.category.name }}</td>
+                        <td>{{ car.cost }}</td>
+                        <td>
+                            <a href="{{ path('app_car_show', {'id': car.id}) }}" class="btn btn-primary">Voir la voiture</a>
+                            <a href="{{ path('app_car_edit', {'id': car.id}) }}" class="btn btn-secondary">Editer la voiture</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="7">Pas de résultats</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="text-center mb-3">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
+
+    <a href="{{ path('app_car_new') }}" class="btn btn-success">Créer une nouvelle voiture</a>
+    </div>
+{% endblock %}
